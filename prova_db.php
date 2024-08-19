@@ -24,4 +24,19 @@ $query = $db->update_one("users", 4, ['name' => 'luca', 'email' => 'luca@mail.it
 
 $query = $db->insert_one("users", ['name' => 'daniel', 'email' => 'daniel@mail.it', 'password' => 'password', 'created_at' => '2020-12-10 12:00:00']);
 // var_dump($query);
+
+$UserM = new UserManager();
+
+$query = $UserM->login("luca@mail.it", "password");
+// var_dump($query);
+
+$book = new BookManager();
+
+$book->createBooks(['title' => 'To Kill a Mockingbird',
+'author' => 'Harper Lee',
+'genre' => 'Drammatico',
+'published_year' => 1960,
+'isbn' => '1',
+'quantity' => 10,
+'created_at' => date('2000-11-11 20:20:00')]);
 ?>
