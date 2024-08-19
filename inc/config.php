@@ -9,3 +9,5 @@ define('DB_USER', 'root');
 define('DB_PASS', 'root');
 
 require_once __DIR__ . '/../classes/DB.php';
+require_once __DIR__ . '/../classes/Book.php';
+require_once __DIR__ . '/../classes/User.php';
