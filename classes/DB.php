@@ -122,12 +122,12 @@ class DBManager
         return $array;
     }
 
-    public function create(array $obj) 
+    public function create(array $obj)
     {
         return $this->db->insert_one($this->tableName, (array) $obj);
     }
 
-    public function delete(int $id) 
+    public function delete(int $id)
     {
         return $this->db->delete_one($this->tableName, (int) $id);
     }
@@ -135,5 +135,13 @@ class DBManager
     public function update(array $obj, int $id)
     {
         return $this->db->update_one($this->tableName, (int) $id, (array) $obj);
+    }
+    
+
+    // funzione privata per settare l'ora attuale
+    protected function setCurrentData()
+    {
+        date_default_timezone_set("Europe/Berlin");
+        return $date = date('Y-m-d H:i:s');
     }
 }
