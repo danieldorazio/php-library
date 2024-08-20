@@ -32,11 +32,18 @@ $query = $UserM->login("luca@mail.it", "password");
 
 $book = new BookManager();
 
-$book->createBooks(['title' => 'To Kill a Mockingbird',
-'author' => 'Harper Lee',
-'genre' => 'Drammatico',
-'published_year' => 1960,
-'isbn' => '1',
-'quantity' => 10,
-'created_at' => date('2000-11-11 20:20:00')]);
+// $book->createBooks(['title' => 'test2',
+// 'author' => 'Harper Lee',
+// 'genre' => 'Drammatico',
+// 'published_year' => 1960,
+// 'isbn' => '2',
+// 'quantity' => 10]);
+
+// $book->removeQuantityBooks(['title' => 'test2',
+//  'author' => 'Harper Lee',
+//  'genre' => 'Drammatico',
+//  'published_year' => 1960,
+//  'isbn' => '2',
+
+var_dump($book->get(1));
 ?>

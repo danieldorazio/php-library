@@ -9,6 +9,9 @@ class BookManager extends DBManager
         $this->columns = ['id', 'title', 'author', 'genre', 'published_year', 'isbn', 'quantity', 'created_at'];
     }
 
+
+
+    // metodo di ricerca libro tramite isbn
     public function getByIsbn(int $isbn)
     {
         $strCol = implode(', ', $this->columns);
@@ -18,11 +21,17 @@ class BookManager extends DBManager
         return (array) $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createBooks(array $arr)
+    // metodo di incremento copie o creazione nuovo libro, da usare in caso di restituzione
+    public function createQuantityBooks(array $arr)
     {
+        // ricerca libro gia esistente tramite isbn
         $getQuery = $this->getByIsbn($arr['isbn']);
 
-        if (array_key_exists('quantity',$getQuery)) {
+        // funzione protetta di DBManager per settare l'ora attuale
+        $arr['created_at'] = $this->setCurrentData();
+
+        // logica di incremento quantità libro o creazione nuovo libro 
+        if (array_key_exists('quantity', $getQuery)) {
             $newQuantity = $getQuery['quantity'] + $arr['quantity'];
             return $this->update(['quantity' => $newQuantity], $getQuery['id']);
         } else {
@@ -30,4 +39,18 @@ class BookManager extends DBManager
         }
     }
 
+    // metodo di decremento copie o segnalazione copie rimanenti, da usare in caso di prestito
+    public function removeQuantityBooks(array $arr)
+    {
+        // ricerca copie disponibili
+        $getQuery = $this->getByIsbn($arr['isbn']);
+
+        // logica di decremento quantità o segnalazione quantità rimanente
+        if ($getQuery['quantity'] >= $arr['quantity']) {
+            $newQuantity = $getQuery['quantity'] - $arr['quantity'];
+            return $this->update(['quantity' => $newQuantity], $getQuery['id']);
+        } else {
+            echo "numero copie non disponibili, copie restanti " . $getQuery['quantity'];
+        }
+    }
 }
